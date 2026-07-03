@@ -1,5 +1,6 @@
 {
-  "name": "with-tailwind",
+  "name": "gleam-ui",
+  "version": "1.00",
   "private": true,
   "scripts": {
     "build": "turbo run build",
