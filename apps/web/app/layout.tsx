@@ -1,7 +1,7 @@
-import "@repo/ui/styles.css";
-import "./globals.css";
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import { ThemeProvider, ThemeScript } from "../../../packages/ui/src/theme";
+import { fontSans, fontDisplay, fontMono } from "../lib/fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -47,12 +47,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en">
-      <body className={GeistSans.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body
+        className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} antialiased`}
+      >
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

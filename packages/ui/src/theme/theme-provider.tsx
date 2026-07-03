@@ -27,7 +27,7 @@ export const ThemeScript = () => (
           } else {
             document.documentElement.setAttribute("data-theme", "light");
           }
-        } catch (e) {}
+        } catch { /* ignore */ }
       `,
     }}
   />
@@ -41,7 +41,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute("data-theme", newTheme);
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);
-    } catch (e) {}
+    } catch { /* ignore */ }
   }, []);
 
   useEffect(() => {
