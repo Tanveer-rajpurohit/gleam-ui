@@ -16,8 +16,6 @@ the package or explore the complete component source.
 - Tree-shakeable exports
 - Full source available in the documentation
 
-
-
 ## License
 
 Gleam UI is licensed under the [MIT License](./LICENSE).
