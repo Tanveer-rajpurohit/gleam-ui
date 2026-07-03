@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "../../../packages/ui/src/styles/gleam.css";
 
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gl-line-strong) transparent;
+}
 
 body {
   background-color: var(--color-bg);
@@ -8,4 +12,22 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--gl-line-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gl-ink-muted);
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ThemeProvider, ThemeScript } from "../../../packages/ui/src/theme";
 import { fontSans, fontDisplay, fontMono } from "../lib/fonts";
 import "./globals.css";
+import { Navbar } from "@/components/Navbar";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: {
@@ -58,7 +60,14 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SmoothScroll>
+            <div className="relative flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+            </div>
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
