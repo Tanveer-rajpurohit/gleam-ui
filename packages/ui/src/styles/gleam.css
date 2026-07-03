@@ -118,3 +118,31 @@
     transition: none !important;
   }
 }
+
+
+@theme {
+  --color-bg: var(--gl-bg);
+  --color-surface: var(--gl-surface); 
+  --color-surface-2: var(--gl-surface-2);
+  --color-line: var(--gl-border); 
+  --color-line-strong: var(--gl-border-strong);
+  --color-ink: var(--gl-text);
+  --color-ink-muted: var(--gl-text-muted);
+  --color-ink-faint: var(--gl-text-faint);                                                                 
+  --color-accent: var(--gl-accent);
+  --color-accent-strong: var(--gl-accent-strong);                                                          
+  --color-accent-soft: var(--gl-accent-soft);
+  --color-accent-fg: var(--gl-accent-fg);                                                                  
+  --color-ring: var(--gl-ring);
+  --color-code-bg: var(--gl-code-bg);
+  
+  --font-display: var(--gl-font-display);
+  --font-sans: var(--gl-font-sans);
+  --font-mono: var(--gl-font-mono);
+  
+  --radius-gl: var(--gl-radius);
+  --radius-gl-lg: var(--gl-radius-lg);
+  
+  --shadow-gl-1: var(--gl-shadow-1);
+  --shadow-gl-2: var(--gl-shadow-2); 
+}
