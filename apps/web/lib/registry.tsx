@@ -8,7 +8,7 @@ export interface PropRow {
   description: string;
 }
 
-export type DemoProps = Record<string, any>;
+export type DemoProps = Record<string, unknown>;
 
 export interface RegistryEntry {
   slug: string;

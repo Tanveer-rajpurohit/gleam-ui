@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Sun } from "lucide-react";
+import { Search } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 import { useState, useEffect } from "react";
 import { SearchModal } from "./SearchModal";
 
@@ -94,9 +95,7 @@ export function Navbar() {
               <span className="hidden sm:inline-block">42.6K</span>
             </a>
             
-            <div className="w-8 h-8 rounded-[10px] bg-transparent border border-line flex items-center justify-center text-ink hover:bg-surface/50 hover:border-line-strong transition-all cursor-pointer group">
-              <Sun className="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" />
-            </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>

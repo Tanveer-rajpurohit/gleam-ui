@@ -14,7 +14,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = "gleam-theme";
 
-
 export const ThemeScript = () => (
   <script
     dangerouslySetInnerHTML={{
@@ -22,11 +21,7 @@ export const ThemeScript = () => (
         try {
           var stored = localStorage.getItem("${STORAGE_KEY}");
           var isDark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (isDark) {
-            document.documentElement.setAttribute("data-theme", "dark");
-          } else {
-            document.documentElement.setAttribute("data-theme", "light");
-          }
+          document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
         } catch { /* ignore */ }
       `,
     }}
@@ -45,25 +40,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Initial hydration from storage or system
     const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
     if (stored === "light" || stored === "dark") {
       applyTheme(stored);
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      applyTheme(prefersDark ? "dark" : "light");
+      applyTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     }
 
-    // Listen for system preference changes
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem(STORAGE_KEY)) {
-        applyTheme(e.matches ? "dark" : "light");
-      }
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem(STORAGE_KEY)) applyTheme(e.matches ? "dark" : "light");
     };
-    
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
   }, [applyTheme]);
 
   const toggleTheme = useCallback(() => {
@@ -79,9 +68,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error("useTheme must be used within a ThemeProvider");
+  return ctx;
 }

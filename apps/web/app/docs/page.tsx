@@ -1,3 +1,5 @@
+import { CodeBlock } from "@/components/CodeBlock";
+
 export default function DocsPage() {
   return (
     <div>
@@ -15,28 +17,25 @@ export default function DocsPage() {
       <div className="space-y-10">
         <section>
           <h2 className="text-lg font-semibold text-ink mb-3">Installation</h2>
-          <div className="rounded-xl border border-line bg-code-bg px-5 py-4 font-mono text-sm text-code-text">
-            npm install gleam-ui
-          </div>
+          <CodeBlock code="npm install gleam-ui" />
         </section>
 
         <section>
           <h2 className="text-lg font-semibold text-ink mb-3">Quick start</h2>
-          <div className="rounded-xl border border-line bg-code-bg px-5 py-4 font-mono text-sm text-code-text leading-relaxed whitespace-pre">
-{`import { ThemeProvider } from "gleam-ui/theme";
+          <CodeBlock
+            language="tsx"
+            code={`import { ThemeProvider } from "gleam-ui/theme";
 import "gleam-ui/styles";
 
 export default function App({ children }) {
   return <ThemeProvider>{children}</ThemeProvider>;
 }`}
-          </div>
+          />
         </section>
 
         <section>
           <h2 className="text-lg font-semibold text-ink mb-3">Peer dependencies</h2>
-          <div className="rounded-xl border border-line bg-code-bg px-5 py-4 font-mono text-sm text-code-text">
-            npm install framer-motion gsap @gsap/react three @react-three/fiber
-          </div>
+          <CodeBlock code="npm install framer-motion gsap @gsap/react three @react-three/fiber" />
           <p className="mt-3 text-sm text-ink-muted leading-relaxed">
             Only install what you use. Components declare their peer dependency in
             the registry so you know exactly what each one needs.

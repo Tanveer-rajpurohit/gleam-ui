@@ -30,13 +30,13 @@
   --gl-glow: rgba(129, 155, 185, 0.20);
   --gl-shadow-1: 0 1px 2px rgba(60, 55, 40, 0.04), 0 4px 16px rgba(60, 55, 40, 0.04);
   --gl-shadow-2: 0 2px 4px rgba(60, 55, 40, 0.06), 0 12px 32px rgba(60, 55, 40, 0.08);
-  --gl-code-bg: #2C2C28;
-  --gl-code-text: #E8E6D8;
+  --gl-code-bg: #FFFFFF;
+  --gl-code-text: #1C1C1A;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --gl-bg: #111116;
+  --gl-bg: #09090B;
   --gl-surface: #1C1C22;
   --gl-surface-2: #28282F;
   --gl-border: rgba(220, 218, 200, 0.08);
@@ -52,7 +52,7 @@
   --gl-glow: rgba(163, 181, 204, 0.15);
   --gl-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
   --gl-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.5);
-  --gl-code-bg: #0C0C10;
+  --gl-code-bg: #0B0C0E;
   --gl-code-text: #D4D2C4;
   color-scheme: dark;
 }

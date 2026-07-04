@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ThemeProvider, ThemeScript } from "../../../packages/ui/src/theme";
+import { ThemeProvider, ThemeScript } from "@/lib/theme";
 import { fontSans, fontDisplay, fontMono } from "../lib/fonts";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
