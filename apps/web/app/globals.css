@@ -3,7 +3,7 @@
 
 html {
   scrollbar-width: thin;
-  scrollbar-color: var(--gl-line-strong) transparent;
+  scrollbar-color: var(--gl-border-strong) transparent;
 }
 
 body {
@@ -24,10 +24,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--gl-line-strong);
+  background-color: var(--gl-border-strong);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gl-ink-muted);
+  background-color: var(--gl-text-faint);
 }

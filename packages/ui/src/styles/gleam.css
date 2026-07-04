@@ -1,33 +1,8 @@
-/* Gleam UI design tokens */
-
 :root {
-  /* Palette */
-  --green-50: #eef4ee;
-  --green-100: #d7e5d6;
-  --green-200: #b4cfb6;
-  --green-300: #8fb996;
-  --green-400: #5c8c68;
-  --green-500: #2f5d3a;
-  --green-600: #274d31;
-  --green-700: #1c3a24;
-  --green-800: #152d1c;
-  --green-900: #0f2214;
-  --green-950: #081409;
-
-  /* Premium neutrals */
-  --black-premium: #0b0c0a;
-  --surface-dark: #121310;
-  --surface-dark-2: #1a1c17;
-  --white-premium: #faf9f6;
-  --surface-light: #f2f1ec;
-  --surface-light-2: #e9e7df;
-
-  /* Typography */
   --gl-font-display: "EB Garamond", Georgia, "Times New Roman", serif;
   --gl-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --gl-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Shape and motion */
   --gl-radius: 10px;
   --gl-radius-lg: 16px;
   --gl-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -37,52 +12,51 @@
   --gl-duration-slow: 600ms;
 }
 
-/* Light theme */
 :root,
 [data-theme="light"] {
-  --gl-bg: var(--white-premium);
-  --gl-surface: var(--surface-light);
-  --gl-surface-2: var(--surface-light-2);
-  --gl-border: rgba(11, 12, 10, 0.1);
-  --gl-border-strong: rgba(11, 12, 10, 0.18);
-  --gl-text: #14160f;
-  --gl-text-muted: #5c5f54;
-  --gl-text-faint: #8b8e80;
-  --gl-accent: var(--green-500);
-  --gl-accent-strong: var(--green-700);
-  --gl-accent-soft: var(--green-100);
-  --gl-accent-fg: var(--white-premium);
-  --gl-ring: var(--green-500);
-  --gl-glow: rgba(47, 93, 58, 0.22);
-  --gl-shadow-1: 0 1px 2px rgba(11, 12, 10, 0.05), 0 4px 16px rgba(11, 12, 10, 0.06);
-  --gl-shadow-2: 0 2px 4px rgba(11, 12, 10, 0.06), 0 12px 32px rgba(11, 12, 10, 0.1);
-  --gl-code-bg: #16180f;
+  --gl-bg: #FEFDF4;
+  --gl-surface: #F5F3E8;
+  --gl-surface-2: #ECEADD;
+  --gl-border: rgba(44, 44, 40, 0.09);
+  --gl-border-strong: rgba(44, 44, 40, 0.16);
+  --gl-text: #2C2C28;
+  --gl-text-muted: #7A7A72;
+  --gl-text-faint: #AEAE9E;
+  --gl-accent: #819BB9;
+  --gl-accent-strong: #5F7D9E;
+  --gl-accent-soft: rgba(129, 155, 185, 0.12);
+  --gl-accent-fg: #FEFDF4;
+  --gl-ring: #819BB9;
+  --gl-glow: rgba(129, 155, 185, 0.20);
+  --gl-shadow-1: 0 1px 2px rgba(60, 55, 40, 0.04), 0 4px 16px rgba(60, 55, 40, 0.04);
+  --gl-shadow-2: 0 2px 4px rgba(60, 55, 40, 0.06), 0 12px 32px rgba(60, 55, 40, 0.08);
+  --gl-code-bg: #2C2C28;
+  --gl-code-text: #E8E6D8;
   color-scheme: light;
 }
 
-/* Dark theme */
 [data-theme="dark"] {
-  --gl-bg: var(--black-premium);
-  --gl-surface: var(--surface-dark);
-  --gl-surface-2: var(--surface-dark-2);
-  --gl-border: rgba(250, 249, 246, 0.09);
-  --gl-border-strong: rgba(250, 249, 246, 0.16);
-  --gl-text: #ece9df;
-  --gl-text-muted: #a8aa9c;
-  --gl-text-faint: #6f7265;
-  --gl-accent: var(--green-300);
-  --gl-accent-strong: var(--green-200);
-  --gl-accent-soft: rgba(143, 185, 150, 0.12);
-  --gl-accent-fg: var(--green-950);
-  --gl-ring: var(--green-300);
-  --gl-glow: rgba(143, 185, 150, 0.25);
-  --gl-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.35);
-  --gl-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.5);
-  --gl-code-bg: #101208;
+  --gl-bg: #111116;
+  --gl-surface: #1C1C22;
+  --gl-surface-2: #28282F;
+  --gl-border: rgba(220, 218, 200, 0.08);
+  --gl-border-strong: rgba(220, 218, 200, 0.14);
+  --gl-text: #E8E6D8;
+  --gl-text-muted: #9494A0;
+  --gl-text-faint: #5E5E68;
+  --gl-accent: #A3B5CC;
+  --gl-accent-strong: #C1CEE0;
+  --gl-accent-soft: rgba(163, 181, 204, 0.10);
+  --gl-accent-fg: #111116;
+  --gl-ring: #A3B5CC;
+  --gl-glow: rgba(163, 181, 204, 0.15);
+  --gl-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
+  --gl-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.5);
+  --gl-code-bg: #0C0C10;
+  --gl-code-text: #D4D2C4;
   color-scheme: dark;
 }
 
-/* Keyframes */
 @keyframes gl-shine-sweep {
   from { transform: translateX(-150%) skewX(-18deg); }
   to { transform: translateX(250%) skewX(-18deg); }
@@ -111,7 +85,6 @@
   initial-value: 0deg;
 }
 
-/* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
   [data-gl-motion] {
     animation: none !important;
@@ -119,30 +92,30 @@
   }
 }
 
-
 @theme {
   --color-bg: var(--gl-bg);
-  --color-surface: var(--gl-surface); 
+  --color-surface: var(--gl-surface);
   --color-surface-2: var(--gl-surface-2);
-  --color-line: var(--gl-border); 
+  --color-line: var(--gl-border);
   --color-line-strong: var(--gl-border-strong);
   --color-ink: var(--gl-text);
   --color-ink-muted: var(--gl-text-muted);
-  --color-ink-faint: var(--gl-text-faint);                                                                 
+  --color-ink-faint: var(--gl-text-faint);
   --color-accent: var(--gl-accent);
-  --color-accent-strong: var(--gl-accent-strong);                                                          
+  --color-accent-strong: var(--gl-accent-strong);
   --color-accent-soft: var(--gl-accent-soft);
-  --color-accent-fg: var(--gl-accent-fg);                                                                  
+  --color-accent-fg: var(--gl-accent-fg);
   --color-ring: var(--gl-ring);
   --color-code-bg: var(--gl-code-bg);
-  
+  --color-code-text: var(--gl-code-text);
+
   --font-display: var(--gl-font-display);
   --font-sans: var(--gl-font-sans);
   --font-mono: var(--gl-font-mono);
-  
+
   --radius-gl: var(--gl-radius);
   --radius-gl-lg: var(--gl-radius-lg);
-  
+
   --shadow-gl-1: var(--gl-shadow-1);
-  --shadow-gl-2: var(--gl-shadow-2); 
+  --shadow-gl-2: var(--gl-shadow-2);
 }

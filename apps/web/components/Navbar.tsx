@@ -31,7 +31,7 @@ export function Navbar() {
   return (
     <>
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-      <header className="sticky top-0 z-40 w-full h-14 border-b border-line bg-surface/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 w-full h-14 border-b border-line bg-bg/80 backdrop-blur-md">
         <div className="container flex items-center h-full w-full px-8 mx-auto">
           
           <Link href="/" className="flex items-center gap-2 mr-8 group">
