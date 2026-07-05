@@ -35,3 +35,21 @@ body {
 .thin-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: var(--gl-text-faint);
 }
+
+/* Shiki dual-theme: flip token colors with the site theme */
+.shiki,
+.shiki span {
+  background-color: transparent !important;
+}
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+}
+.shiki code {
+  display: block;
+  font-family: var(--gl-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
