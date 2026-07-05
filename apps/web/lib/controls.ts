@@ -1,18 +1,4 @@
-interface ControlBase {
-  prop: string;
-  label?: string;
-}
-
-export type Control = ControlBase &
-  (
-    | { type: "range"; min: number; max: number; step?: number; defaultValue: number }
-    | { type: "select"; options: string[]; defaultValue: string }
-    | { type: "boolean"; defaultValue: boolean }
-    | { type: "color"; defaultValue: string }
-    | { type: "text"; defaultValue: string }
-  );
-
-export type ControlValues = Record<string, string | number | boolean>;
+import { Control, ControlValues } from "./registry/types";
 
 export function controlDefaults(controls: Control[] | undefined): ControlValues {
   const values: ControlValues = {};
