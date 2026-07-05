@@ -25,7 +25,7 @@ export function Hero() {
         <div className="flex items-center gap-4">
           <Link
             href="/docs"
-            className="px-6 py-3 rounded-full bg-ink text-bg text-sm font-medium transition-all hover:scale-105 active:scale-95"
+            className="px-6 py-3 rounded-full bg-accent text-accent-fg text-sm font-medium transition-all hover:scale-105 active:scale-95"
           >
             Explore components
           </Link>

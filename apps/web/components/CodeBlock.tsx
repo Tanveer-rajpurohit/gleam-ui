@@ -4,10 +4,11 @@ import { useState } from "react";
 
 interface CodeBlockProps {
   code: string;
+  html?: string;
   language?: string;
 }
 
-export function CodeBlock({ code, language }: CodeBlockProps) {
+export function CodeBlock({ code, html, language }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   function copy() {
@@ -18,7 +19,7 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
   }
 
   return (
-    <div className="group relative rounded-xl border border-line bg-code-bg px-5 py-4">
+    <div className="group relative rounded-xl border border-line bg-surface px-5 py-4">
       <button
         onClick={copy}
         aria-label={copied ? "Copied" : "Copy code"}
@@ -36,9 +37,15 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
           </svg>
         )}
       </button>
-      <pre className="overflow-x-auto font-mono text-sm text-code-text leading-relaxed whitespace-pre pr-8">
-        <code data-language={language}>{code}</code>
-      </pre>
+      <div className="overflow-x-auto thin-scrollbar pr-8">
+        {html ? (
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        ) : (
+          <pre className="text-ink whitespace-pre text-[13px] font-mono leading-relaxed">
+            <code data-language={language}>{code}</code>
+          </pre>
+        )}
+      </div>
     </div>
   );
 }
