@@ -3,7 +3,7 @@
 import Card from "@/components/componetsPage/Card";
 import { Dropdown } from "@/components/utils/Dropdown";
 import { CATEGORIES, readyEntries } from "@/lib/registry";
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { matchSorter } from "match-sorter";
@@ -11,10 +11,13 @@ import { useMemo, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
+const PAGE_SIZE = 6
+
 const Page = () => {
 
     const [sortBy, setSortBy] = useState<string>("All")
     const [input, setInput] = useState<string>("")
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
     const rootRef = useRef<HTMLDivElement>(null)
     const gridRef = useRef<HTMLDivElement>(null)
@@ -38,6 +41,9 @@ const Page = () => {
       return q ? matchSorter(byCategory, q, { keys: ["name", "category", "description"] }) : byCategory
     }, [input, sortBy])
 
+    const visible = filtered.slice(0, visibleCount)
+    const hasMore = filtered.length > visibleCount
+
     
     const firstRun = useRef(true)
     useGSAP(() => {
@@ -51,6 +57,18 @@ const Page = () => {
       )
     }, { dependencies: [sortBy], scope: rootRef })
 
+    
+    const prevCount = useRef(PAGE_SIZE)
+    useGSAP(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { prevCount.current = visibleCount; return }
+      const kids = gridRef.current ? Array.from(gridRef.current.children) : []
+      const fresh = kids.slice(prevCount.current)
+      if (fresh.length) {
+        gsap.from(fresh, { autoAlpha: 0, y: 16, duration: 0.5, ease: "power3.out", stagger: 0.05, clearProps: "transform" })
+      }
+      prevCount.current = visibleCount
+    }, { dependencies: [visibleCount], scope: rootRef })
+
   return (
     <div ref={rootRef} className="w-full max-w-[1320px] mx-auto px-6 py-14 lg:px-12 xl:px-20">
       <div className="w-full space-y-4">
@@ -62,6 +80,7 @@ const Page = () => {
             options={["All", ...CATEGORIES]}
             onChange={(value) => {
               setSortBy(value)
+              setVisibleCount(PAGE_SIZE)
             }}
           />
         </div>
@@ -76,7 +95,10 @@ const Page = () => {
           <input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value)
+              setVisibleCount(PAGE_SIZE)
+            }}
             placeholder="Search for components, primitives, or effects..."
             className="search-box w-full rounded-gl border border-line bg-surface py-2.5 pl-12 pr-16 text-body-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all"
           />
@@ -86,7 +108,7 @@ const Page = () => {
       
       <div className="w-full mt-16">
         <div ref={gridRef} className="w-full grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((entry, i) => (
+          {visible.map((entry, i) => (
             <Card
               key={entry.slug}
               name={entry.name}
@@ -97,6 +119,25 @@ const Page = () => {
             />
           ))}
         </div>
+
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-accent px-7 py-2.5 text-body-sm font-medium text-accent transition-colors duration-300 hover:text-accent-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-300 ease-out group-hover:scale-y-100"
+              />
+              <span className="relative z-10">Load more</span>
+              <ChevronDown
+                className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                strokeWidth={2}
+              />
+            </button>
+          </div>
+        )}
 
         {filtered.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
