@@ -1,6 +1,8 @@
 "use client"
 
+import Card from "@/components/componetsPage/Card";
 import { Dropdown } from "@/components/utils/Dropdown";
+import { readyEntries } from "@/lib/registry";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
@@ -9,10 +11,8 @@ const Page = () => {
     const [sortBy, setSortBy] = useState<string>("All")
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-6 py-14 lg:px-12 xl:px-20">
+    <div className="w-full max-w-[1320px] mx-auto px-6 py-14 lg:px-12 xl:px-20">
       <div className="w-full space-y-4">
-        
-        
         <div className="flex w-full items-center justify-between">
           <h2 className="font-display text-display-sm text-ink tracking-tight">Components</h2>
           <Dropdown
@@ -24,7 +24,6 @@ const Page = () => {
             }}
           />
         </div>
-
        
         <div className="relative w-full group">
           
@@ -40,8 +39,23 @@ const Page = () => {
           />
 
         </div>
-
       </div>
+      
+      <div className="w-full mt-12">
+        <div className="w-full grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {readyEntries.map((entry, i) => (
+            <Card
+              key={entry.slug}
+              name={entry.name}
+              category={entry.category}
+              image={entry.previewImage}
+              video={entry.previewVideo}
+              index={i}
+            />
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };

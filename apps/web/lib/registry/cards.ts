@@ -7,6 +7,7 @@ export const cardComponents: RegistryEntry[] = [
     category: "Cards",
     description: "Tilts toward the cursor on a weighted spring with a moving glare highlight.",
     status: "ready",
+    previewImage: "/demos/demo-3.png",
     source: "cards/tilt-card.tsx",
     importPath: "gleam-ui/cards",
     exportName: "TiltCard",
@@ -19,22 +20,4 @@ export const cardComponents: RegistryEntry[] = [
       { prop: "scale", type: "number", default: "1.02", description: "Scale while hovered." },
     ],
   },
-  {
-    slug: "spotlight-card",
-    name: "Spotlight Card",
-    category: "Cards",
-    description: "A soft radial light follows the cursor across the surface.",
-    status: "ready",
-    source: "cards/spotlight-card.tsx",
-    importPath: "gleam-ui/cards",
-    exportName: "SpotlightCard",
-    controls: [
-      { prop: "radius", type: "range", min: 100, max: 700, step: 20, defaultValue: 320 },
-      { prop: "intensity", type: "range", min: 0.1, max: 1, step: 0.05, defaultValue: 0.5 },
-    ],
-    props: [
-      { prop: "radius", type: "number", default: "320", description: "Spotlight radius in px." },
-      { prop: "intensity", type: "number", default: "0.5", description: "Peak light strength, 0–1." },
-    ],
-  }
 ];

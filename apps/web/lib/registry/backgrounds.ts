@@ -7,6 +7,8 @@ export const backgroundComponents: RegistryEntry[] = [
     category: "Backgrounds",
     description: "Animated film-grain over any section. SVG turbulence, zero JS per frame.",
     status: "ready",
+    previewImage: "/demos/demo-1.png",
+    previewVideo: "/demos/demo-1.mp4",
     source: "backgrounds/grain-overlay.tsx",
     importPath: "gleam-ui/backgrounds",
     exportName: "GrainOverlay",
@@ -20,12 +22,4 @@ export const backgroundComponents: RegistryEntry[] = [
       { prop: "speed", type: "number", default: "0.9", description: "Seconds per shift cycle." },
     ],
   },
-  {
-    slug: "aurora",
-    name: "Aurora",
-    category: "Backgrounds",
-    description: "Slow-moving aurora gradients in the green range.",
-    status: "planned",
-    controls: [],
-  }
 ];

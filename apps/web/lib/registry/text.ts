@@ -7,6 +7,8 @@ export const textComponents: RegistryEntry[] = [
     category: "Text Animations",
     description: "Variable-font text that gains weight under the cursor.",
     status: "ready",
+    previewImage: "/demos/demo-1.png",
+    previewVideo: "/demos/demo-1.mp4",
     source: "text/pressure-text.tsx",
     importPath: "gleam-ui/text",
     exportName: "PressureText",
@@ -27,6 +29,8 @@ export const textComponents: RegistryEntry[] = [
     category: "Text Animations",
     description: "Characters flicker through a glyph pool and settle left-to-right.",
     status: "ready",
+    previewImage: "/demos/demo-2.png",
+    previewVideo: "/demos/demo-2.mp4",
     source: "text/scramble-text.tsx",
     importPath: "gleam-ui/text",
     exportName: "ScrambleText",
@@ -39,5 +43,5 @@ export const textComponents: RegistryEntry[] = [
       { prop: "text", type: "string", description: "The text to decode into." },
       { prop: "speed", type: "number", default: "1", description: "Decode speed multiplier." },
     ],
-  }
+  },
 ];

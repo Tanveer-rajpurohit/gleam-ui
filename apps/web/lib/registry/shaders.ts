@@ -5,8 +5,10 @@ export const shaderComponents: RegistryEntry[] = [
     slug: "particle-field",
     name: "Particle Field",
     category: "3D & Shaders",
-    description: "A WebGL field of noise-driven particles in the Viridian greens.",
+    description: "A WebGL field of noise-driven particles that parts around the cursor.",
     status: "ready",
+    previewImage: "/demos/demo-4.png",
+    previewVideo: "/demos/demo-4.mp4",
     source: "three/particle-field.tsx",
     importPath: "gleam-ui/three",
     exportName: "ParticleField",
@@ -26,6 +28,8 @@ export const shaderComponents: RegistryEntry[] = [
     category: "3D & Shaders",
     description: "A domain-warped noise shader rendered as ink, cloud, or contour rings.",
     status: "ready",
+    previewImage: "/demos/demo-5.png",
+    previewVideo: "/demos/demo-5.mp4",
     source: "three/noise-ink.tsx",
     importPath: "gleam-ui/three",
     exportName: "NoiseInk",
@@ -38,5 +42,5 @@ export const shaderComponents: RegistryEntry[] = [
       { prop: "mode", type: '"ink" | "cloud" | "rings"', default: '"ink"', description: "Thresholded blots, the soft field, or contour lines." },
       { prop: "speed", type: "number", default: "1", description: "Evolution speed multiplier." },
     ],
-  }
+  },
 ];
