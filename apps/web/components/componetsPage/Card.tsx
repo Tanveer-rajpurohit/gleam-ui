@@ -1,5 +1,7 @@
 "use client";
 
+import gsap from "gsap";
+import Image from "next/image";
 import { useRef, type MouseEvent } from "react";
 
 export interface CardProps {
@@ -10,7 +12,10 @@ export interface CardProps {
   index: number;
 }
 
+
 export default function Card({ name, category, image, video, index }: CardProps) {
+  const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const num = String(index + 1).padStart(2, "0");
@@ -25,14 +30,16 @@ export default function Card({ name, category, image, video, index }: CardProps)
 
   const onEnter = () => {
     videoRef.current?.play().catch(() => {});
+    gsap.to(videoRef.current, {autoAlpha: 1, duration: reduce ? 0 : 0.3, ease: "power2.out", overwrite: true})
   };
 
   const onLeave = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.pause();
-    v.currentTime = 0;
+    gsap.to(videoRef.current,{
+      autoAlpha: 0, duration: reduce ? 0 : 0.4, ease: "power2.out", overwrite: true,
+      onComplete: () => { const v = videoRef.current; if (v) { v.pause(); v.currentTime = 0; } }
+    })
   };
+  
 
   return (
     <article
@@ -40,7 +47,7 @@ export default function Card({ name, category, image, video, index }: CardProps)
       onMouseMove={onMove}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="group relative w-full rounded-gl-lg border border-line bg-surface p-2.5 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-1"
+      className="group relative w-full rounded-gl-lg border border-line bg-surface p-2.5 transition-[transform,border-color] "
     >
       <div
         aria-hidden
@@ -67,10 +74,12 @@ export default function Card({ name, category, image, video, index }: CardProps)
       <div className="relative z-10">
         <div className="relative aspect-[16/10] overflow-hidden rounded-gl bg-surface-2 ring-1 ring-line">
           {image ? (
-            <img
+            <Image
               src={image}
               alt={name}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-surface-2 to-surface">
@@ -87,7 +96,7 @@ export default function Card({ name, category, image, video, index }: CardProps)
               playsInline
               preload="none"
               poster={image}
-              className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+              className="absolute inset-0 h-full w-full object-cover opacity-0"
             />
           )}
         </div>

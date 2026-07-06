@@ -16,6 +16,7 @@ const STORAGE_KEY = "gleam-theme";
 
 export const ThemeScript = () => (
   <script
+    suppressHydrationWarning
     dangerouslySetInnerHTML={{
       __html: `
         try {
