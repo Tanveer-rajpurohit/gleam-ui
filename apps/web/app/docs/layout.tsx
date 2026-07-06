@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar } from "@/components/docs/Sidebar";
 import { docGroups } from "@/lib/docs";
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {

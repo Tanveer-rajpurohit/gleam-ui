@@ -9,7 +9,7 @@ import { SearchModal } from "./SearchModal";
 
 const NAV_LINKS = [
   { name: "Docs", href: "/docs" },
-  { name: "Showcase", href: "/showcase" },
+  { name: "Components", href: "/components" },
 ];
 
 export function Navbar() {
