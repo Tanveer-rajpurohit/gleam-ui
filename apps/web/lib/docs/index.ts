@@ -4,20 +4,45 @@ export interface DocPage {
   description: string;
 }
 
-export const docPages: DocPage[] = [
+export interface DocGroup {
+  category: string;
+  pages: DocPage[];
+}
+
+export const docGroups: DocGroup[] = [
   {
-    slug: "introduction",
-    title: "Introduction",
-    description: "What Gleam UI is and the philosophy behind it.",
+    category: "Getting Started",
+    pages: [
+      {
+        slug: "introduction",
+        title: "Introduction",
+        description: "What Gleam UI is and the philosophy behind it.",
+      },
+      {
+        slug: "installation",
+        title: "Installation",
+        description: "How to add Gleam UI to your project.",
+      },
+    ],
   },
   {
-    slug: "installation",
-    title: "Installation",
-    description: "How to add Gleam UI to your project.",
-  },
-  {
-    slug: "theming",
-    title: "Theming",
-    description: "The Viridian design system and token scales.",
+    category: "Core Concepts",
+    pages: [
+      {
+        slug: "theming",
+        title: "Theming",
+        description: "The Viridian design system and token scales.",
+      },
+      {
+        slug: "usage",
+        title: "How to Use",
+        description: "Base guide for consuming components.",
+      },
+      {
+        slug: "performance",
+        title: "Performance",
+        description: "Best practices for WebGL and animations.",
+      },
+    ],
   },
 ];
