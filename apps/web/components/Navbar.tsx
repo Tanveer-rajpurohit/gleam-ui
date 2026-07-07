@@ -49,7 +49,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`transition-colors hover:text-ink ${
-                    isActive ? "text-ink" : "text-ink-muted"
+                    isActive ? "text-ink-muted" : "text-ink"
                   }`}
                 >
                   {link.name}
