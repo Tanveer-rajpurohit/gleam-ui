@@ -111,6 +111,7 @@ const Page = () => {
           {visible.map((entry, i) => (
             <Card
               key={entry.slug}
+              slug={entry.slug}
               name={entry.name}
               category={entry.category}
               image={entry.previewImage}

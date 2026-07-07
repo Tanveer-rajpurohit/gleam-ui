@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, type MouseEvent } from "react";
 
 export interface CardProps {
@@ -10,17 +11,18 @@ export interface CardProps {
   image?: string;
   video?: string;
   index: number;
+  slug: string;
 }
 
 
-export default function Card({ name, category, image, video, index }: CardProps) {
+export default function Card({ name, category, image, video, index, slug }: CardProps) {
   const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const num = String(index + 1).padStart(2, "0");
 
-  const onMove = (e: MouseEvent<HTMLDivElement>) => {
+  const onMove = (e: MouseEvent<HTMLAnchorElement>) => {
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -42,7 +44,8 @@ export default function Card({ name, category, image, video, index }: CardProps)
   
 
   return (
-    <article
+    <Link
+      href={`/components/${slug}`}
       ref={ref}
       onMouseMove={onMove}
       onMouseEnter={onEnter}
@@ -111,6 +114,6 @@ export default function Card({ name, category, image, video, index }: CardProps)
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
