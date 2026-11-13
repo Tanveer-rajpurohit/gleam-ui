@@ -39,3 +39,5 @@ docs/engineering/
 
 GEMINI.md
 gleamui.md
+# licensed fonts, not redistributable
+apps/web/fonts/PPNeueMontreal*.otf
