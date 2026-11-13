@@ -1,15 +1,12 @@
 import { Sidebar } from "@/components/docs/Sidebar";
-import { docGroups } from "@/lib/docs";
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full px-8">
-      <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 border-r border-line md:block">
-        <Sidebar groups={docGroups} />
+    <div className="mx-auto max-w-[1320px] px-4 sm:px-6 md:grid md:grid-cols-[220px_1fr] md:gap-10 lg:px-8">
+      <aside className="border-b border-line md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:border-b-0 md:border-r">
+        <Sidebar />
       </aside>
-      <main className="min-w-0 flex-1 py-12 px-8 lg:px-16">
-        <div className="mx-auto max-w-3xl">{children}</div>
-      </main>
+      <article className="min-w-0 max-w-3xl py-10 md:py-14">{children}</article>
     </div>
   );
 }

@@ -1,134 +1,133 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { Search, FileText, Type } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { matchSorter } from "match-sorter";
+import { registry } from "@/registry";
+import { DOC_PAGES } from "@/lib/site";
 
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SEARCH_RESULTS = [
-  { id: 1, title: "Introduction", category: "Get Started", icon: FileText },
-  { id: 2, title: "Installation", category: "Get Started", icon: FileText },
-  { id: 3, title: "MCP", category: "Get Started", icon: FileText },
-  { id: 4, title: "Split Text", category: "Text Animations", icon: Type },
-  { id: 5, title: "Blur Text", category: "Text Animations", icon: Type },
+interface SearchItem {
+  href: string;
+  title: string;
+  group: string;
+  description: string;
+}
+
+const ITEMS: SearchItem[] = [
+  ...registry.map((entry) => ({
+    href: `/components/${entry.slug}`,
+    title: entry.name,
+    group: entry.category,
+    description: entry.description,
+  })),
+  ...DOC_PAGES.map((page) => ({ href: page.href, title: page.title, group: "Docs", description: page.description })),
 ];
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const router = useRouter();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  useGSAP(() => {
-    if (isOpen) {
-      gsap.set(backdropRef.current, { opacity: 0 });
-      gsap.set(modalRef.current, { opacity: 0, scale: 0.95, y: -20 });
-      gsap.set(itemsRef.current, { opacity: 0, x: -10 });
+  const results = useMemo(() => {
+    const trimmed = query.trim();
+    return trimmed ? matchSorter(ITEMS, trimmed, { keys: ["title", "group", "description"] }) : ITEMS;
+  }, [query]);
 
-      const tl = gsap.timeline();
-      
-      tl.to(backdropRef.current, {
-        opacity: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      })
-      .to(modalRef.current, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.3,
-        ease: "back.out(1.5)",
-      }, "-=0.1")
-      .to(itemsRef.current, {
-        opacity: 1,
-        x: 0,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "power2.out",
-      }, "-=0.1");
-    }
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (isOpen && !dialog.open) dialog.showModal();
+    if (!isOpen && dialog.open) dialog.close();
   }, [isOpen]);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex]);
 
-  if (!isOpen) return null;
+  const go = (item: SearchItem | undefined) => {
+    if (!item) return;
+    onClose();
+    router.push(item.href);
+  };
 
   return (
-    <div 
-      ref={containerRef}
-      className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4"
+    <dialog
+      ref={dialogRef}
+      onClose={() => {
+        setQuery("");
+        setActiveIndex(0);
+        onClose();
+      }}
+      onClick={(event) => {
+        if (event.target === dialogRef.current) onClose();
+      }}
+      aria-label="Search"
+      className="m-0 mx-auto mt-[12vh] w-[calc(100%-2rem)] max-w-xl rounded-xl border border-line-strong bg-surface p-0 text-ink shadow-gl-2 backdrop:bg-bg/85"
     >
-      <div 
-        ref={backdropRef}
-        className="absolute inset-0 bg-bg/80 backdrop-blur-sm"
-        onClick={onClose}
-      />
-
-      <div 
-        ref={modalRef}
-        className="relative w-full max-w-2xl bg-surface border border-line rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
-      >
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-line">
-          <Search className="w-5 h-5 text-ink-muted" />
-          <input 
-            type="text"
-            placeholder="Search components, categories, or keywords..."
-            className="flex-1 bg-transparent border-none outline-none text-ink text-[15px] placeholder:text-ink-muted/50"
-            autoFocus
-          />
-          <button 
-            onClick={onClose}
-            className="px-2 py-1 text-[11px] font-medium rounded-md border border-line bg-surface-2 text-ink-muted hover:text-ink transition-colors"
-          >
-            esc
-          </button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-2 scrollbar-thin">
-          <div className="flex flex-col gap-1 overflow-hidden">
-            {SEARCH_RESULTS.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  ref={(el) => { itemsRef.current[index] = el; }}
-                  className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-surface-2 transition-colors text-left group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-[8px] bg-surface-2 border border-line flex items-center justify-center text-accent group-hover:bg-surface transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold tracking-wide text-ink">{item.title}</span>
-                      <span className="text-[12px] text-ink-muted mt-0.5">in {item.category}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity pr-2 text-ink-muted">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 10 4 15 9 20"></polyline>
-                      <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
-                    </svg>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+      <div className="flex items-center gap-3 border-b border-line px-4">
+        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-ink-faint" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+        <input
+          autoFocus
+          role="combobox"
+          aria-expanded
+          aria-controls="search-results"
+          aria-label="Search components and docs"
+          value={query}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setActiveIndex(0);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              setActiveIndex((index) => Math.min(index + 1, results.length - 1));
+            }
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              setActiveIndex((index) => Math.max(index - 1, 0));
+            }
+            if (event.key === "Enter") go(results[activeIndex]);
+          }}
+          placeholder="Search components and docs"
+          className="h-12 flex-1 bg-transparent text-body-sm outline-none placeholder:text-ink-faint"
+        />
+        <kbd className="rounded border border-line px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">esc</kbd>
       </div>
-    </div>
+
+      <ul ref={listRef} id="search-results" role="listbox" className="max-h-[50vh] overflow-y-auto p-2">
+        {results.map((item, index) => (
+          <li key={item.href} role="option" aria-selected={index === activeIndex}>
+            <button
+              type="button"
+              tabIndex={-1}
+              onPointerMove={() => setActiveIndex(index)}
+              onClick={() => go(item)}
+              className={`flex w-full items-baseline justify-between gap-4 rounded-lg px-3 py-2.5 text-left ${
+                index === activeIndex ? "bg-surface-2" : ""
+              }`}
+            >
+              <span className="min-w-0">
+                <span className="block text-body-sm font-medium">{item.title}</span>
+                <span className="block truncate text-xs text-ink-muted">{item.description}</span>
+              </span>
+              <span className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-ink-faint">{item.group}</span>
+            </button>
+          </li>
+        ))}
+        {results.length === 0 ? (
+          <li className="px-3 py-8 text-center text-body-sm text-ink-muted">Nothing matches &ldquo;{query}&rdquo;.</li>
+        ) : null}
+      </ul>
+    </dialog>
   );
 }

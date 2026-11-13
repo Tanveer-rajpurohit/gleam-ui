@@ -1,5 +1,4 @@
 :root {
-  /* Palette — Mist Blue, 50–950 */
   --mist-50: #f1f4f8;
   --mist-100: #dee5ee;
   --mist-200: #c1cee0;
@@ -11,100 +10,71 @@
   --mist-800: #2b3948;
   --mist-900: #1e2833;
   --mist-950: #131a21;
-  --mist-950: #131a21;
-
-  --gl-font-display: "EB Garamond", Georgia, "Times New Roman", serif;
-  --gl-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --gl-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --gl-radius: 10px;
   --gl-radius-lg: 16px;
   --gl-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --gl-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --gl-duration-fast: 180ms;
-  --gl-duration: 320ms;
-  --gl-duration-slow: 600ms;
 }
 
 :root,
 [data-theme="light"] {
-  --gl-bg: #F0F5FA;
-  --gl-surface: #EBF2FA;
-  --gl-surface-2: #DFE9F5;
-  --gl-border: rgba(30, 45, 66, 0.10);
+  --gl-bg: #f0f5fa;
+  --gl-surface: #ebf2fa;
+  --gl-surface-2: #dfe9f5;
+  --gl-border: rgba(30, 45, 66, 0.1);
   --gl-border-strong: rgba(30, 45, 66, 0.17);
-  --gl-text: #1F2A38;
-  --gl-text-muted: #5C6B7D;
-  --gl-text-faint: #97A6B8;
-  --gl-accent: #819BB9;
-  --gl-accent-strong: #5F7D9E;
+  --gl-text: #1f2a38;
+  --gl-text-muted: #5c6b7d;
+  --gl-text-faint: #97a6b8;
+  --gl-accent: var(--mist-400);
+  --gl-accent-strong: var(--mist-500);
+  --gl-accent-ink: var(--mist-500);
   --gl-accent-soft: rgba(129, 155, 185, 0.14);
-  --gl-accent-fg: #F0F5FA;
-  --gl-ring: #819BB9;
+  --gl-accent-fg: #f0f5fa;
+  --gl-ring: var(--mist-400);
   --gl-glow: rgba(129, 155, 185, 0.22);
   --gl-shadow-1: 0 1px 2px rgba(30, 45, 66, 0.05), 0 4px 16px rgba(30, 45, 66, 0.06);
-  --gl-shadow-2: 0 2px 4px rgba(30, 45, 66, 0.07), 0 12px 32px rgba(30, 45, 66, 0.10);
-  --gl-code-bg: #FFFFFF;
-  --gl-code-text: #10151D;
+  --gl-shadow-2: 0 2px 4px rgba(30, 45, 66, 0.07), 0 12px 32px rgba(30, 45, 66, 0.1);
+  --gl-shadow-window: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 24px 70px rgba(30, 45, 66, 0.28), 0 0 0 1px rgba(30, 45, 66, 0.12);
   color-scheme: light;
 }
 
 [data-theme="dark"] {
   --gl-bg: #080808;
-  --gl-surface: #0B0C0E;
-  --gl-surface-2: #1E1E1E;
+  --gl-surface: #141414;
+  --gl-surface-2: #1e1e1e;
   --gl-border: rgba(255, 255, 255, 0.08);
   --gl-border-strong: rgba(255, 255, 255, 0.15);
-  --gl-text: #ECEDEE;
-  --gl-text-muted: #9A9A9C;
+  --gl-text: #ecedee;
+  --gl-text-muted: #9a9a9c;
   --gl-text-faint: #626264;
-  --gl-accent: #A3B5CC;
-  --gl-accent-strong: #C1CEE0;
+  --gl-accent: var(--mist-300);
+  --gl-accent-strong: var(--mist-200);
+  --gl-accent-ink: var(--mist-300);
   --gl-accent-soft: rgba(163, 181, 204, 0.12);
   --gl-accent-fg: #080808;
-  --gl-ring: #A3B5CC;
+  --gl-ring: var(--mist-300);
   --gl-glow: rgba(163, 181, 204, 0.18);
   --gl-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.5);
   --gl-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.6), 0 16px 40px rgba(0, 0, 0, 0.6);
+  --gl-shadow-window: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
   color-scheme: dark;
 }
 
-@keyframes gl-shine-sweep {
-  from { transform: translateX(-150%) skewX(-18deg); }
-  to { transform: translateX(250%) skewX(-18deg); }
-}
-
-@keyframes gl-border-spin {
-  to { --gl-border-angle: 360deg; }
-}
-
-@keyframes gl-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@keyframes gl-grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(-2%, 3%); }
-  40% { transform: translate(3%, -2%); }
-  60% { transform: translate(-3%, -3%); }
-  80% { transform: translate(2%, 2%); }
-}
-
-@property --gl-border-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-gl-motion] {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
 @theme {
+  --color-mist-50: var(--mist-50);
+  --color-mist-100: var(--mist-100);
+  --color-mist-200: var(--mist-200);
+  --color-mist-300: var(--mist-300);
+  --color-mist-400: var(--mist-400);
+  --color-mist-500: var(--mist-500);
+  --color-mist-600: var(--mist-600);
+  --color-mist-700: var(--mist-700);
+  --color-mist-800: var(--mist-800);
+  --color-mist-900: var(--mist-900);
+  --color-mist-950: var(--mist-950);
+
   --color-bg: var(--gl-bg);
   --color-surface: var(--gl-surface);
   --color-surface-2: var(--gl-surface-2);
@@ -115,22 +85,21 @@
   --color-ink-faint: var(--gl-text-faint);
   --color-accent: var(--gl-accent);
   --color-accent-strong: var(--gl-accent-strong);
+  --color-accent-ink: var(--gl-accent-ink);
   --color-accent-soft: var(--gl-accent-soft);
   --color-accent-fg: var(--gl-accent-fg);
   --color-ring: var(--gl-ring);
-  --color-code-bg: var(--gl-code-bg);
-  --color-code-text: var(--gl-code-text);
 
-  --font-display: var(--gl-font-display);
-  --font-sans: var(--gl-font-sans);
-  --font-mono: var(--gl-font-mono);
+  --font-sans: var(--gl-font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--gl-font-display), Georgia, "Times New Roman", serif;
+  --font-mono: var(--gl-font-mono), ui-monospace, Menlo, monospace;
 
-  --text-display-xl: 4rem;
+  --text-display-xl: clamp(2.75rem, 6vw, 4rem);
   --text-display-xl--line-height: 1.05;
   --text-display-xl--letter-spacing: -1.5px;
   --text-display-xl--font-weight: 400;
 
-  --text-display-lg: 3rem;
+  --text-display-lg: clamp(2.25rem, 4.4vw, 3rem);
   --text-display-lg--line-height: 1.1;
   --text-display-lg--letter-spacing: -1px;
   --text-display-lg--font-weight: 400;
@@ -153,17 +122,18 @@
   --text-title-md--line-height: 1.4;
   --text-title-md--font-weight: 500;
 
-  --text-title-sm: 1rem;
-  --text-title-sm--line-height: 1.4;
-  --text-title-sm--font-weight: 500;
+  --text-title: 1.0625rem;
+  --text-title--line-height: 1.35;
+  --text-title--font-weight: 500;
 
   --text-body-md: 1rem;
   --text-body-md--line-height: 1.55;
-  --text-body-md--font-weight: 400;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
 
   --text-body-sm: 0.875rem;
   --text-body-sm--line-height: 1.55;
-  --text-body-sm--font-weight: 400;
 
   --text-caption: 0.8125rem;
   --text-caption--line-height: 1.4;
@@ -174,13 +144,30 @@
   --text-caption-upper--letter-spacing: 1.5px;
   --text-caption-upper--font-weight: 500;
 
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+
   --text-code: 0.875rem;
   --text-code--line-height: 1.6;
-  --text-code--font-weight: 400;
+
+  --text-button: 0.875rem;
+  --text-button--line-height: 1;
+  --text-button--font-weight: 500;
+
+  --text-nav-link: 0.875rem;
+  --text-nav-link--line-height: 1.4;
+  --text-nav-link--font-weight: 500;
 
   --radius-gl: var(--gl-radius);
   --radius-gl-lg: var(--gl-radius-lg);
 
   --shadow-gl-1: var(--gl-shadow-1);
   --shadow-gl-2: var(--gl-shadow-2);
+  --shadow-vd-1: var(--gl-shadow-1);
+  --shadow-vd-2: var(--gl-shadow-2);
+  --shadow-window: var(--gl-shadow-window);
+
+  --ease-vd-out: var(--gl-ease-out);
+  --ease-vd-in-out: var(--gl-ease-in-out);
 }

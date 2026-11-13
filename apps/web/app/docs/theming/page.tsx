@@ -1,113 +1,63 @@
+import type { Metadata } from "next";
 import { highlight } from "@/lib/highlight";
+import { CodeBlock } from "@/components/utils/CodeBlock";
+import { DocHeader, DocSection } from "@/components/docs/Prose";
 
-const TOKENS = `:root, [data-theme="light"] {
-  --gl-bg: var(--white-premium);        /* #fefdf4 — warm parchment, never #fff */
-  --gl-surface: var(--surface-light);
-  --gl-text: #2c2c28;
-  --gl-accent: var(--mist-400);         /* #819bb9 — dusty mist blue */
-  --gl-glow: rgba(129, 155, 185, 0.2);
-}
+export const metadata: Metadata = {
+  title: "Theming",
+  description: "How Gleam UI components take colour, type and reduced-motion settings from your project.",
+  alternates: { canonical: "/docs/theming" },
+};
 
-[data-theme="dark"] {
-  --gl-bg: var(--black-premium);        /* #09090b — near black, never #000 */
-  --gl-surface: var(--surface-dark);
-  --gl-text: #e8e6d8;
-  --gl-accent: var(--mist-300);         /* #a3b5cc — moonlit mist */
-  --gl-glow: rgba(163, 181, 204, 0.15);
-}`;
+const COLOURS = `<LiquidChrome tint="#3b82f6" />
+<DitherWave front="#f5f5f4" back="#0c0a09" />
+<div className="text-emerald-600">
+  <DotField />
+</div>`;
 
-const OVERRIDE = `/* Rebrand without touching a component: override the tokens. */
-[data-theme="dark"] {
-  --gl-accent: #c9a86a;      /* switch the accent to brass */
-  --gl-glow: rgba(201, 168, 106, 0.25);
-}`;
-
-const HOOK = `import { useTheme } from "gleam-ui/theme";
-
-function Toolbar() {
-  const { theme, preference, setTheme, toggle } = useTheme();
-  return <button onClick={toggle}>Now: {theme}</button>;
-}`;
-
-export const metadata = { title: "Theming" };
+const DARK = `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));`;
 
 export default async function ThemingPage() {
-  const [tokensHtml, overrideHtml, hookHtml] = await Promise.all([
-    highlight(TOKENS, "css"),
-    highlight(OVERRIDE, "css"),
-    highlight(HOOK, "tsx"),
-  ]);
-
-  const swatches = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+  const [coloursHtml, darkHtml] = await Promise.all([highlight(COLOURS, "tsx"), highlight(DARK, "css")]);
 
   return (
-    <article className="max-w-3xl">
-      <p className="text-caption-upper uppercase text-accent">Documentation</p>
-      <h1 className="mt-3 font-display text-display-lg text-ink">Theming</h1>
-      <p className="mt-4 text-body-md text-ink-muted">
-        Every component reads CSS variables, never raw hex. Light and dark are two
-        sets of token values on <code className="font-mono text-code text-accent">data-theme</code>,
-        so switching themes — or rebranding entirely — is a token override, not a rebuild.
-      </p>
-
-      <h2 className="mt-12 font-display text-display-sm text-ink">The mist scale</h2>
-      <p className="mt-3 text-body-md text-ink-muted">
-        A dusty, desaturated blue ramp on warm parchment — premium stationery, not
-        SaaS-dashboard blue. Mist is the single accent: CTAs, active states, glow.
-        Never painted everywhere.
-      </p>
-      <div className="mt-5 flex overflow-hidden rounded-lg border border-line">
-        {swatches.map((stop) => (
-          <div
-            key={stop}
-            className="group relative h-20 flex-1"
-            style={{ background: `var(--mist-${stop})` }}
-          >
-            <span
-              className="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-[10px]"
-              style={{ color: stop >= 400 ? "var(--white-premium)" : "var(--mist-900)" }}
-            >
-              {stop}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <h2 className="mt-12 font-display text-display-sm text-ink">Semantic tokens</h2>
-      <div
-        className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-        dangerouslySetInnerHTML={{ __html: tokensHtml }}
+    <>
+      <DocHeader
+        title="Theming"
+        lead="Components do not ship a theme. They take colours as props or inherit them, and they use whatever font the surrounding text uses."
       />
 
-      <h2 className="mt-12 font-display text-display-sm text-ink">Override to rebrand</h2>
-      <div
-        className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-        dangerouslySetInnerHTML={{ __html: overrideHtml }}
-      />
-
-      <h2 className="mt-12 font-display text-display-sm text-ink">useTheme</h2>
-      <div
-        className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-        dangerouslySetInnerHTML={{ __html: hookHtml }}
-      />
-
-      <h2 className="mt-12 font-display text-display-sm text-ink">Typography</h2>
-      <p className="mt-3 text-body-md text-ink-muted">
-        Two-typeface editorial system: EB Garamond for display (the brand voice),
-        Inter for body and UI, JetBrains Mono for code. The full scale ships as
-        Tailwind <code className="font-mono text-code text-accent">fontSize</code> tokens —
-        <code className="font-mono text-code text-accent"> text-display-xl</code> through{" "}
-        <code className="font-mono text-code text-accent">text-caption-upper</code>.
-      </p>
-      <div className="mt-5 space-y-4 rounded-lg border border-line p-6">
-        <p className="font-display text-display-md text-ink">Display — EB Garamond</p>
-        <p className="text-title-md text-ink">Title — Inter Medium</p>
-        <p className="text-body-md text-ink-muted">
-          Body — Inter Regular at a comfortable 1.55 line height for long-form reading.
+      <DocSection title="Colour">
+        <p>
+          Shader and canvas components accept hex colours as props. Dot Field draws in <code>currentColor</code>, so a
+          text colour class on the parent is enough.
         </p>
-        <p className="font-mono text-code text-ink-muted">code — JetBrains Mono</p>
-        <p className="text-caption-upper uppercase text-ink-faint">Caption upper — tracked wide</p>
-      </div>
-    </article>
+        <CodeBlock code={COLOURS} html={coloursHtml} />
+      </DocSection>
+
+      <DocSection title="Dark mode">
+        <p>
+          DOM components such as Mac Window and Glide Select use the Tailwind <code>dark:</code> variant. If your site
+          switches theme with a <code>data-theme</code> attribute, as this one does, point the variant at it:
+        </p>
+        <CodeBlock code={DARK} html={darkHtml} />
+      </DocSection>
+
+      <DocSection title="Type">
+        <p>
+          Nothing sets a <code>font-family</code>. Pressure Text animates the <code>wght</code> axis, so it needs a
+          variable font. This site pairs PP Neue Montreal with Kode Mono, and Kode Mono is the variable one used in that
+          demo.
+        </p>
+      </DocSection>
+
+      <DocSection title="Reduced motion">
+        <p>
+          When the visitor has reduced motion turned on, looping effects render a still frame, entrance animations jump
+          to their end state, and pointer-driven effects such as Magnetic Button do nothing. You do not need to pass a
+          prop for this.
+        </p>
+      </DocSection>
+    </>
   );
 }

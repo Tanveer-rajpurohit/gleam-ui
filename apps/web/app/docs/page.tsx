@@ -1,58 +1,59 @@
-import { CodeBlock } from "@/components/utils/CodeBlock";
-import { highlight } from "@/lib/highlight";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { registry } from "@/registry";
+import { DocHeader, DocSection } from "@/components/docs/Prose";
 
-export default async function DocsPage() {
-  const npmInstall = "npm install gleam-ui";
-  const npmInstallHtml = await highlight(npmInstall, "bash");
+export const metadata: Metadata = {
+  title: "Introduction",
+  description: "What Gleam UI is, how its components are delivered, and what each one guarantees.",
+  alternates: { canonical: "/docs" },
+};
 
-  const quickStart = `import { ThemeProvider } from "gleam-ui/theme";
-import "gleam-ui/styles";
-
-export default function App({ children }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
-}`;
-  const quickStartHtml = await highlight(quickStart, "tsx");
-
-  const peerDeps = "npm install framer-motion gsap @gsap/react three @react-three/fiber";
-  const peerDepsHtml = await highlight(peerDeps, "bash");
+export default function DocsPage() {
+  const standalone = registry.filter((entry) => entry.dependencies.length === 0).length;
 
   return (
-    <div className="max-w-3xl">
-      <p className="text-caption-upper uppercase text-accent">
-        Documentation
-      </p>
-      <h1 className="mt-3 font-display text-display-lg text-ink">
-        Getting started
-      </h1>
-      <p className="mt-4 text-body-md text-ink-muted">
-        Gleam UI is a motion-first React component library built on the Viridian design
-        system. Every component is animated, accessible, and production-ready.
-      </p>
+    <>
+      <DocHeader
+        title="Introduction"
+        lead="Gleam UI is a set of animated React components that you copy into your project as source files. There is no runtime package to install or keep up to date."
+      />
 
-      <div className="mt-12 space-y-10">
-        <section>
-          <h2 className="font-display text-display-sm text-ink mb-3">Installation</h2>
-          <CodeBlock code={npmInstall} html={npmInstallHtml} language="bash" />
-        </section>
+      <DocSection title="What you get">
+        <p>
+          There are <strong>{registry.length} components</strong> today. Each one is a single <code>.tsx</code> file.{" "}
+          <strong>{standalone}</strong> depend on React alone, including every shader, which talks to WebGL directly
+          instead of going through three.js. The rest use GSAP.
+        </p>
+        <p>
+          Because the file lives in your repo, you can change an easing curve, a duration or a line of GLSL without
+          forking anything.
+        </p>
+      </DocSection>
 
-        <section>
-          <h2 className="font-display text-display-sm text-ink mb-3">Quick start</h2>
-          <CodeBlock
-            code={quickStart}
-            html={quickStartHtml}
-            language="tsx"
-          />
-        </section>
+      <DocSection title="What every component does">
+        <ul className="list-disc space-y-2 pl-5">
+          <li>Takes a <code>className</code> and sizes itself to its parent.</li>
+          <li>Checks <code>prefers-reduced-motion</code> and holds still or skips the effect when it is set.</li>
+          <li>Removes its listeners, animation frames and WebGL context when it unmounts.</li>
+          <li>Is marked <code>&quot;use client&quot;</code>, so it can be imported from a server component.</li>
+          <li>Pauses its render loop while it is off screen, where it has one.</li>
+        </ul>
+      </DocSection>
 
-        <section>
-          <h2 className="font-display text-display-sm text-ink mb-3">Peer dependencies</h2>
-          <CodeBlock code={peerDeps} html={peerDepsHtml} language="bash" />
-          <p className="mt-3 text-sm text-ink-muted leading-relaxed">
-            Only install what you use. Components declare their peer dependency in
-            the registry so you know exactly what each one needs.
-          </p>
-        </section>
-      </div>
-    </div>
+      <DocSection title="Requirements">
+        <p>
+          React 19 and Tailwind CSS 4. Components that list GSAP need <code>gsap</code> 3.13 or newer and{" "}
+          <code>@gsap/react</code>. Water Ripple needs WebGL 2.
+        </p>
+        <p>
+          Next:{" "}
+          <Link href="/docs/installation" className="text-accent-ink underline underline-offset-4">
+            install your first component
+          </Link>
+          .
+        </p>
+      </DocSection>
+    </>
   );
 }
