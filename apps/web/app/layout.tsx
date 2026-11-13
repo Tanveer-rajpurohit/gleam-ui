@@ -1,73 +1,45 @@
 import type { Metadata } from "next";
-import { ThemeProvider, ThemeScript } from "@/lib/theme";
-import { fontSans, fontDisplay, fontMono } from "../lib/fonts";
-import "./globals.css";
+import { ThemeScript } from "@/lib/theme";
+import { fontDisplay, fontMono, fontSans } from "@/lib/fonts";
+import { SITE_URL } from "@/lib/site";
 import { Navbar } from "@/components/Navbar";
-import { SmoothScroll } from "@/components/SmoothScroll";
+import { Footer } from "@/components/Footer";
+import { SiteChrome } from "@/components/SiteChrome";
+import "./globals.css";
+
+const DESCRIPTION = "Animated React components delivered as single files: shaders, text effects, galleries and docks you paste and edit.";
 
 export const metadata: Metadata = {
-  title: {
-    default: "Gleam UI — Motion-first React components",
-    template: "%s — Gleam UI",
-  },
-  description:
-    "A collection of polished, animated and 3D React components built with GSAP, Motion and React Three Fiber.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Gleam UI: motion components you own", template: "%s | Gleam UI" },
+  description: DESCRIPTION,
   applicationName: "Gleam UI",
-  keywords: [
-    "Gleam UI",
-    "React components",
-    "animated components",
-    "3D components",
-    "GSAP",
-    "Motion",
-    "React Three Fiber",
-    "Three.js",
-    "WebGL",
-    "TypeScript",
-    "UI component library",
-  ],
-  authors: [
-    {
-      name: "Tanveer Rajpurohit",
-      url: "https://tanveer-singh.vercel.app",
-    },
-  ],
-  creator: "Tanveer Rajpurohit",
-  publisher: "Gleam UI",
-  openGraph: {
-    type: "website",
-    siteName: "Gleam UI",
-    title: "Gleam UI — Motion-first React components",
-    description:
-      "Polished, animated and 3D React components for expressive interfaces.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  authors: [{ name: "Tanveer Singh", url: "https://tanveer-singh.vercel.app" }],
+  openGraph: { type: "website", siteName: "Gleam UI", title: "Gleam UI: motion components you own", description: DESCRIPTION },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`} suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>
-      <body
-        className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} antialiased`}
-      >
-        <ThemeProvider>
-          <SmoothScroll>
-            <div className="relative flex flex-col min-h-screen">
-              <Navbar />
-              <main className="flex-1">{children}</main>
-            </div>
-          </SmoothScroll>
-        </ThemeProvider>
+      <body className="antialiased">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-3 focus:py-2 focus:text-bg">
+          Skip to content
+        </a>
+        <div className="flex min-h-screen flex-col">
+          <SiteChrome>
+            <Navbar />
+          </SiteChrome>
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <SiteChrome>
+            <Footer />
+          </SiteChrome>
+        </div>
       </body>
     </html>
   );
